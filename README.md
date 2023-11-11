@@ -1,16 +1,16 @@
-This is a [Next.js](https://github.com/expo/expo) + [Gluestack-ui](https://ui.gluestack.io/) project template bootstrapped with [`create-expo-app`](https://docs.expo.dev/get-started/create-a-project/).
+## FoodMood - All about Food
+
+This is a social media app all about food developed by Priyanshu Singh, Shannon Alfred, Arghya Patra, Agastya Nand under the guidance of Prof. Sneha NP and Prof. Rajani.
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies (use Git Bash Terminal inside VS code on Windows):
 
 ```bash
-# For web
-yarn web
-# For ios
-yarn ios
-# For android
-yarn android
+#Install
+npm i
+#Start on expo Go
+npm start
 ```
 
 You can start editing the page by modifying `App.tsx`. The page auto-updates as you edit the file.
