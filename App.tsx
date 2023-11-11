@@ -1,148 +1,132 @@
 import { config } from '@gluestack-ui/config';
-import { Box, GluestackUIProvider, Text } from '@gluestack-ui/themed';
-import { ScrollView } from 'react-native';
-import Gradient from './assets/Icons/Gradient';
-import DocumentData from './assets/Icons/DocumentData';
-import LightBulbPerson from './assets/Icons/LightbulbPerson';
-import Rocket from './assets/Icons/Rocket';
-import Logo from './assets/Icons/Logo';
+import React from "react";
+import { Box, GluestackUIProvider, Text, Pressable } from '@gluestack-ui/themed';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, ActivityIndicator } from "react-native";
+import FeedScreen from './screens/FeedScreen';
+import NotifyScreen from './screens/NotifyScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import ListScreen from './screens/ListScreen';
+import AddScreen from './screens/AddScreen';
+import ExploreScreen from './screens/ExploreScreen';
+import MyHeader from './components/MyHeader';
+import SearchScreen from './screens/SearchScreen';
 
-export default function App() {
-  return (
-    <GluestackUIProvider config={config}>
-      <Home />
-    </GluestackUIProvider>
-  );
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+
+export default class App extends React.Component {
+  state = {
+    isReady: false,
+  };
+  componentDidMount = async () => {
+    this.setState({ isReady: true });
+  };
+
+  Root = () => {
+    return (
+      <Tab.Navigator
+        initialRouteName="Feed"
+        screenOptions={{
+          tabBarActiveTintColor: '#e91e63',
+          tabBarShowLabel: false
+        }}
+      >
+        <Tab.Screen
+          name="Feed"
+          component={FeedScreen}
+          options={({ navigation, route }) => ({
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+            headerTitle: (props) => <MyHeader {...props} />,
+            // Add a placeholder button without the `onPress` to avoid flicker
+            headerLeft: () => (
+              <Pressable style={{paddingLeft:20}} onPress={() => navigation.navigate('Notifications')}>
+                <MaterialCommunityIcons name="bell" color="gray" size={22} />
+              </Pressable>
+            ),
+            headerRight: () => (
+              <Pressable style={{paddingRight:20}} onPress={() => navigation.navigate('Search')}>
+                <MaterialCommunityIcons name="magnify" color="gray" size={22} />
+              </Pressable>
+            ),
+          })}
+        />
+        <Tab.Screen
+          name="Explore"
+          component={ExploreScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="compass" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Add"
+          component={AddScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="plus-circle" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="List"
+          component={ListScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="playlist-edit" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="account" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
+  render() {
+    if (!this.state.isReady) {
+      return <ActivityIndicator size="large" style={styles.container} />;
+    }
+
+    return (
+      <GluestackUIProvider config={config}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Root"
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Root" component={this.Root} />
+            <Stack.Screen name="Notifications" component={NotifyScreen} />
+            <Stack.Screen name="Search" component={SearchScreen} />
+
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GluestackUIProvider>
+    );
+  }
 }
 
-const Home = () => {
-  return <Container />;
-};
-
-const FeatureCard = ({ iconSvg: IconSvg, name, desc }: any) => {
-  return (
-    <Box
-      flexDirection="column"
-      borderWidth={1}
-      borderColor="$borderDark700"
-      sx={{
-        _web: {
-          flex: 1,
-        },
-      }}
-      m="$2"
-      p="$4"
-      rounded="$md"
-    >
-      <Box alignItems="center" display="flex" flexDirection="row">
-        {/* <Image source={iconSvg} alt="document" width={22} height={22} /> */}
-        <Text>
-          <IconSvg />
-        </Text>
-        <Text fontSize={22} color="$white" fontWeight="500" ml="$2">
-          {name}
-        </Text>
-      </Box>
-      <Text color="$textDark400" mt="$2">
-        {desc}
-      </Text>
-    </Box>
-  );
-};
-
-const Container = () => {
-  return (
-    <Box flex={1} backgroundColor="$black">
-      <ScrollView
-        style={{ height: '100%' }}
-        contentContainerStyle={{ flexGrow: 1 }}
-      >
-        <Box
-          position="absolute"
-          sx={{
-            '@base': {
-              h: 500,
-              w: 500,
-            },
-            '@lg': {
-              h: 700,
-              w: 700,
-            },
-          }}
-        >
-          <Gradient />
-        </Box>
-        <Box
-          height="60%"
-          sx={{
-            '@base': {
-              my: '$16',
-              mx: '$5',
-              height: '80%',
-            },
-            '@lg': {
-              my: '$24',
-              mx: '$32',
-            },
-          }}
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Box
-            bg="#64748B33"
-            py="$2"
-            px="$6"
-            rounded="$full"
-            alignItems="center"
-            marginTop={20}
-            sx={{
-              '@base': {
-                flexDirection: 'column',
-              },
-              '@sm': {
-                flexDirection: 'row',
-              },
-              '@md': { alignSelf: 'flex-start' },
-            }}
-          >
-            <Text color="$white" fontWeight="$normal">
-              Get started by editing
-            </Text>
-            <Text color="$white" fontWeight="$medium" ml="$2">
-              App.tsx
-            </Text>
-          </Box>
-          <Box justifyContent="center" alignItems="center">
-            <Logo />
-          </Box>
-          <Box
-            sx={{
-              '@base': {
-                flexDirection: 'column',
-              },
-              '@md': {
-                flexDirection: 'row',
-              },
-            }}
-          >
-            <FeatureCard
-              iconSvg={DocumentData}
-              name="Docs"
-              desc="Find in-depth information about gluestack features and API."
-            />
-            <FeatureCard
-              iconSvg={LightBulbPerson}
-              name="Learn"
-              desc="Learn about gluestack in an interactive course with quizzes!"
-            />
-            <FeatureCard
-              iconSvg={Rocket}
-              name="Deploy"
-              desc="Instantly drop your gluestack site to a shareable URL with vercel."
-            />
-          </Box>
-        </Box>
-      </ScrollView>
-    </Box>
-  );
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
