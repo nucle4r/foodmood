@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ForYouFeed from '../components/ForYou';
-import FollowingFeed from '../components/Following';
+import ForYouFeed from '../../components/Page/ForYou';
+import FollowingFeed from '../../components/Page/Following';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -12,19 +12,19 @@ export default class FeedScreen extends Component {
             <Tab.Navigator
                 initialRouteName="For You"
                 screenOptions={{
-                    tabBarActiveTintColor: '#e91e63',
-                    tabBarLabelStyle: { fontSize: 12 },
+                    tabBarActiveTintColor: '#FA7070',
+                    tabBarLabelStyle: { fontSize: 14, textTransform: 'none', fontStyle: 'italic', fontWeight: "bold" },
                 }}
             >
                 <Tab.Screen
                     name="For You"
                     component={ForYouFeed}
-                    options={{ tabBarLabel: 'For You' }}
+                    options={{ tabBarLabel: 'for you' }}
                 />
                 <Tab.Screen
                     name="Following"
                     component={FollowingFeed}
-                    options={{ tabBarLabel: 'Following' }}
+                    options={{ tabBarLabel: 'following' }}
                 />
             </Tab.Navigator>
         );

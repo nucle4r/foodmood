@@ -17,7 +17,7 @@ export default class MyHeader extends Component {
         return (
 
             <Image
-                source={require("../assets/foodmood-logo.png")}
+                source={require("../../assets/foodmood-logo.png")}
                 style={{ height: 25, width: 100 }}
                 resizeMode="contain"
                 resizeMethod="resize"

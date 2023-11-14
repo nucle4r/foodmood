@@ -1,39 +1,36 @@
 import React, { Component } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ForYouFeed from '../components/ForYou';
-import FollowingFeed from '../components/Following';
 import { Center, HStack, Icon, Input, InputField, InputIcon, InputSlot, Pressable, Text, VStack, Image } from "@gluestack-ui/themed";
 import { SearchIcon } from "lucide-react-native";
-import { useNavigation, NavigationState, NavigationContainerProps, NavigationProp } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProps } from "../../components/RouteTypes/Stack";
+import { BottomTabNavigationProps } from "../../components/RouteTypes/BottomTab";
 
-const Tab = createMaterialTopTabNavigator();
-const navigation = useNavigation();
 
-export default class ExploreScreen extends Component{
 
-  navigateToScreen = () => {
-    // Use this.props.navigation.navigate to navigate to another screen
-    this.props.navigation.navigate("Search");
-  };
+
+export default class ExploreScreen extends Component<RootStackNavigationProps>{
+
   render() {
 
     return (
       <View style={styles.container}>
-        <Pressable onPress={() => this.navigateToScreen}>
+        <Pressable onPress={() => this.props.navigation.navigate('Search')}>
           <HStack h="$16" alignItems="center">
-            <Input variant="rounded" size="md" w="90%">
-              <InputField placeholder="Food • Recipies • Restaurants" />
-              <InputSlot
-                bg="$primary500"
-                borderRadius="$full"
-                h="$6"
-                w="$6"
-                m="$1.5"
-              >
-                <InputIcon as={SearchIcon} color="white" size="sm" />
-              </InputSlot>
-            </Input>
+            <View style={{ width: "100%", alignItems: "center" }}>
+              <Input variant="rounded" size="md" w="95%" isReadOnly={true}>
+                <InputField placeholder="Orders • Recipes • Restaurants" onPressIn={() => this.props.navigation.navigate('Search')} />
+                <InputSlot
+                  bg="$primary500"
+                  borderRadius="$full"
+                  h="$6"
+                  w="$6"
+                  m="$1.5"
+                >
+                  <InputIcon as={SearchIcon} color="white" size="sm" />
+                </InputSlot>
+              </Input></View>
           </HStack>
         </Pressable>
         <ScrollView contentContainerStyle={styles.contentContainer}>

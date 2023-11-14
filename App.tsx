@@ -1,22 +1,24 @@
 import { config } from '@gluestack-ui/config';
 import React from "react";
-import { Box, GluestackUIProvider, Text, Pressable } from '@gluestack-ui/themed';
+import { Box, GluestackUIProvider, Text, Pressable, Icon } from '@gluestack-ui/themed';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { StyleSheet, ActivityIndicator } from "react-native";
-import FeedScreen from './screens/FeedScreen';
-import NotifyScreen from './screens/NotifyScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import ListScreen from './screens/ListScreen';
-import AddScreen from './screens/AddScreen';
-import ExploreScreen from './screens/ExploreScreen';
-import MyHeader from './components/MyHeader';
-import SearchScreen from './screens/SearchScreen';
+import FeedScreen from './screens/BottomBar/FeedScreen';
+import NotifyScreen from './screens/Stack/NotifyScreen';
+import ProfileScreen from './screens/BottomBar/ProfileScreen';
+import ListScreen from './screens/BottomBar/ListScreen';
+import AddScreen from './screens/Stack/AddScreen';
+import ExploreScreen from './screens/BottomBar/ExploreScreen';
+import MyHeader from './components/Page/MyHeader';
+import SearchScreen from './screens/Stack/SearchScreen';
+import { RootStackParamList } from './components/RouteTypes/Stack';
+import { Compass, Home, List, PlusCircle, UserCircle } from 'lucide-react-native';
 
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 
@@ -33,8 +35,9 @@ export default class App extends React.Component {
       <Tab.Navigator
         initialRouteName="Feed"
         screenOptions={{
-          tabBarActiveTintColor: '#e91e63',
-          tabBarShowLabel: false
+          tabBarActiveTintColor: '#FA7070',
+          tabBarInactiveTintColor: 'black',
+          tabBarShowLabel: false,
         }}
       >
         <Tab.Screen
@@ -42,18 +45,18 @@ export default class App extends React.Component {
           component={FeedScreen}
           options={({ navigation, route }) => ({
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+              <Icon as={Home} color={color} size='xl'/>
             ),
             headerTitle: (props) => <MyHeader {...props} />,
             // Add a placeholder button without the `onPress` to avoid flicker
             headerLeft: () => (
-              <Pressable style={{paddingLeft:20}} onPress={() => navigation.navigate('Notifications')}>
-                <MaterialCommunityIcons name="bell" color="gray" size={22} />
+              <Pressable style={{ paddingLeft: 20 }} onPress={() => navigation.navigate('Notifications')}>
+                <MaterialCommunityIcons name="bell" color="black" size={22} />
               </Pressable>
             ),
             headerRight: () => (
-              <Pressable style={{paddingRight:20}} onPress={() => navigation.navigate('Search')}>
-                <MaterialCommunityIcons name="magnify" color="gray" size={22} />
+              <Pressable style={{ paddingRight: 20 }} onPress={() => navigation.navigate('Search')}>
+                <MaterialCommunityIcons name="magnify" color="black" size={22} />
               </Pressable>
             ),
           })}
@@ -63,7 +66,7 @@ export default class App extends React.Component {
           component={ExploreScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="compass" color={color} size={size} />
+              <Icon as={Compass} color={color} size='xl'/>
             ),
           }}
         />
@@ -72,7 +75,7 @@ export default class App extends React.Component {
           component={AddScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="plus-circle" color={color} size={size} />
+              <Icon as={PlusCircle} color={color} size='xl'/>
             ),
           }}
         />
@@ -81,7 +84,7 @@ export default class App extends React.Component {
           component={ListScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="playlist-edit" color={color} size={size} />
+              <Icon as={List} color={color} size='xl'/>
             ),
           }}
         />
@@ -90,7 +93,7 @@ export default class App extends React.Component {
           component={ProfileScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="account" color={color} size={size} />
+              <Icon as={UserCircle} color={color} size='xl'/>
             ),
           }}
         />
@@ -108,12 +111,12 @@ export default class App extends React.Component {
           <Stack.Navigator
             initialRouteName="Root"
             screenOptions={{
-              headerShown: false,
+              headerShown: true,
             }}
           >
-            <Stack.Screen name="Root" component={this.Root} />
+            <Stack.Screen name="Root" component={this.Root} options={{ headerShown: false }} />
             <Stack.Screen name="Notifications" component={NotifyScreen} />
-            <Stack.Screen name="Search" component={SearchScreen} />
+            <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }}/>
 
           </Stack.Navigator>
         </NavigationContainer>
