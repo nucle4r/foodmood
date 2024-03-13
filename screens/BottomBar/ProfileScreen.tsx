@@ -11,16 +11,17 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import UserPosts from "../../components/Page/UserPosts";
 import { Grid3X3, Tags } from "lucide-react-native";
 import UserTaggedPosts from "../../components/Page/UserTaggedPosts";
+import { useRecoilState } from "recoil";
+import { userData } from "../../utils/State";
 
 const Tab = createMaterialTopTabNavigator();
 
 
-export default class ProfileScreen extends Component {
-  state = {
-    count: 0,
-  };
 
-  render() {
+export default function ProfileScreen() {
+
+  const [profile, setProfile] = useRecoilState(userData)
+
     const tabMenu = (
       <HStack>
 
@@ -55,21 +56,21 @@ export default class ProfileScreen extends Component {
           <HStack space="2xl" reversed={false}>
             <VStack style={{ alignItems: "center" }}>
               <Avatar bgColor="$amber600" size="xl" borderRadius="$full">
-                <AvatarFallbackText>Priyanshu Singh</AvatarFallbackText>
+                <AvatarFallbackText>{profile.fullName}</AvatarFallbackText>
               </Avatar>
-              <Text size="sm">Priyanshu Singh</Text>
+              <Text size="sm">{profile.fullName}</Text>
             </VStack>
             <HStack space="xl" style={{ alignSelf: "center" }}>
               <VStack style={{ alignItems: "center" }}>
-                <Heading>0</Heading>
+                <Heading>{profile.no_of_posts}</Heading>
                 <Text size="sm">Posts</Text>
               </VStack>
               <VStack style={{ alignItems: "center" }}>
-                <Heading>0</Heading>
+                <Heading>{profile.followersCount}</Heading>
                 <Text size="sm">Followers</Text>
               </VStack>
               <VStack style={{ alignItems: "center" }}>
-                <Heading>0</Heading>
+                <Heading>{profile.followingCount}</Heading>
                 <Text size="sm">Following</Text>
               </VStack>
             </HStack>
@@ -95,7 +96,6 @@ export default class ProfileScreen extends Component {
 
     );
   }
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

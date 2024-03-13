@@ -1,4 +1,4 @@
-import { VStack, Icon, Text } from "@gluestack-ui/themed";
+import { HStack, Icon, Text } from "@gluestack-ui/themed";
 import { Ghost } from "lucide-react-native";
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
@@ -13,13 +13,13 @@ export default class NotifyScreen extends Component {
     return (
       <View style={styles.container}>
         
-        <VStack space="lg" alignItems="center">
+        <HStack space="lg" alignItems="center">
           <Icon as={Ghost} size="xl"/>
           <Text size="lg" fontStyle="italic">
             No new notifications!
           </Text>
 
-        </VStack>
+        </HStack>
         
       </View>
     );

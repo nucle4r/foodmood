@@ -11,7 +11,7 @@ export default class ForYouFeed extends Component {
 
   render() {
     return (
-      <ScrollView style={{backgroundColor:"#fff"}}>
+      <ScrollView style={{ backgroundColor: "#fff" }}>
         <Box
           maxWidth="100%"
           borderColor="$borderLight200"
@@ -31,10 +31,10 @@ export default class ForYouFeed extends Component {
         >
           <HStack alignItems="center" space="md" margin={10}>
             <Avatar bgColor="#FA7070" size="sm" borderRadius="$full">
-              <AvatarFallbackText>Priyanshu Singh</AvatarFallbackText>
+              <AvatarFallbackText>Shannon Sanjay Alfred</AvatarFallbackText>
             </Avatar>
             <Text size="sm" fontWeight="bold">
-              priyanshu20_
+              shanzfred
             </Text>
           </HStack>
           <Box>
@@ -56,11 +56,9 @@ export default class ForYouFeed extends Component {
             <Text size="sm">
               0 Likes
             </Text>
-            <Link>
-              <LinkText size="sm" color="gray">
-                View all 0 comments
-              </LinkText>
-            </Link>
+            <Text>
+              View all 0 comments
+            </Text>
 
           </VStack>
           <VStack margin={10}>
