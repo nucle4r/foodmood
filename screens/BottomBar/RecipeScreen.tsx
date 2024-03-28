@@ -19,26 +19,11 @@ export default class RecipeScreen extends Component {
             alignItems: "center",
           }}
         >
-          <Pressable onPress={()=>{
-            fetch('http://192.168.37.23:8800/api/auth/register', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                username: 'yourValue',
-                email: 'yourOtherValue',
-                password:'ddddddd'
-              }),
-            });
-          }}>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 18, fontStyle: "italic" }}
-            >
-              List Screen
-            </Text>
-          </Pressable>
+          <Text
+            style={{ fontWeight: "bold", fontSize: 18, fontStyle: "italic" }}
+          >
+            List Screen
+          </Text>
         </View>
       </View >
     );

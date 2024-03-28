@@ -3,7 +3,6 @@
     "name": "foodmood",
     "slug": "foodmood",
     "version": "1.0.0",
-    "entryPoint": "./Main.tsx",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
